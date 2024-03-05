@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DepartamentSeeder::class,
             StateSeeder::class,
-            TypeSeeder::class
+            TypeSeeder::class,
+            PrioritySeeder::class,
         ]);
 
         User::factory()->count(30)->create();

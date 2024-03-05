@@ -10,6 +10,10 @@ class Role extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'id' => 'string',
+    ];
+    
 
     public function users(): HasMany
     {

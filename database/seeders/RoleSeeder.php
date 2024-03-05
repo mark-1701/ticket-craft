@@ -23,9 +23,11 @@ class RoleSeeder extends Seeder
             'Tester',
         ];
 
-        foreach ($roles as $roleName) {
+        foreach ($roles as $key => $role) {
+            $id = strtoupper(($key + 1) . '_' . str_replace(' ', '_', $role));
             Role::create([
-                'name' => $roleName,
+                'id'=> $id,
+                'name' => $role,
             ]);
         }
     }
