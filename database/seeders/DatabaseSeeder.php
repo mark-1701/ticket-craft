@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         $this->call([
-            RoleSeeder::class
+            RoleSeeder::class,
+            DepartamentSeeder::class,
+            StateSeeder::class,
+            TypeSeeder::class
         ]);
 
         User::factory()->count(30)->create();
