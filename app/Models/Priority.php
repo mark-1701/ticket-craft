@@ -9,5 +9,8 @@ class Priority extends Model
 {
     use HasFactory;
     protected $table = 'priorities';
+    protected $casts = [
+        'id' => 'string',
+    ];
     protected $guarded = [];
 }
