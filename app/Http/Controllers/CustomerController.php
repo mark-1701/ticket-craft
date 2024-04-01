@@ -3,25 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
-use App\Helpers\SimpleCRUDHelper;
+use App\Http\Resources\CustomerResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\Customer;
 
-class RoleController extends Controller
+class CustomerController extends Controller
 {
-    public $crud;
-
-    public function __construct()
-    {
-        $this->crud = new SimpleCRUDHelper(new Role);
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return $this->crud->index();
+        try {
+            $resource = CustomerResource::collection(Customer::all());
+            return ResponseHelper::successResponse($resource, 'Customers consultados exitosamente.', 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::errorResponse('Error al consultar customers. '.$e->getMessage(), 400);
+        }
     }
 
     /**
@@ -35,17 +34,17 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-       return $this->crud->store($request);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id)
     {
-        return $this->crud->show($id);
+        //
     }
 
     /**
@@ -59,16 +58,16 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, string $id)
     {
-        return $this->crud->update($request, $id);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy(string $id)
     {
-        return $this->crud->destroy($id);
+        //
     }
 }
