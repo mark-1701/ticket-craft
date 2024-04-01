@@ -20,9 +20,9 @@ class UserController extends Controller
     {
         try {
             $resource = UserResource::collection(User::all());
-            return ResponseHelper::successResponse($resource, 'Usuarios consultados exitosamente.', 200);
+            return ResponseHelper::successResponse($resource, 'users consultados exitosamente.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar usuarios. '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al consultar users: ' . $e->getMessage(), 400);
         }
     }
 
@@ -50,9 +50,9 @@ class UserController extends Controller
             $user->profile_picture_uri = $fileName;
             $user->save();
             $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Usuario creado exitosamente.', 201);
+            return ResponseHelper::successResponse($resource, 'Registro creado exitosamente en la tabla users.', 201);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al crear usuario. '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al crear registro en la tabla users: '.$e->getMessage(), 400);
         }
     }
 
@@ -64,9 +64,9 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Usuario consultado exitosamente.', 200);
+            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla users.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar usuario. '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al consultar registro en la tabla users: '.$e->getMessage(), 400);
         }
     }
 
@@ -94,9 +94,9 @@ class UserController extends Controller
             if ($fileName != null) $user->profile_picture_uri = $fileName;
             $user->save();
             $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Usuario actualizado exitosamente.', 200);
+            return ResponseHelper::successResponse($resource, 'Registro actualizado exitosamente en la tabla users.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al actualizar usuario. '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al actualizar registro en la tabla users. '.$e->getMessage(), 400);
         }
     }
 
@@ -107,9 +107,9 @@ class UserController extends Controller
     {
         try {
             User::find($id)->delete();
-            return ResponseHelper::successResponse(null, 'Usuario eliminado exitosamente.', 200);
+            return ResponseHelper::successResponse(null, 'Registro eliminado exitosamente en la tabla users.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al eliminar el usuario: '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al eliminar registro en la tabla users: '.$e->getMessage(), 400);
         }
     }
 }

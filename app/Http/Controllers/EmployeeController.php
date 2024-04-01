@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Helpers\SimpleCRUDHelper;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\EmployeeResource;
+use App\Models\Employee;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Customer;
 
-class CustomerController extends Controller
+class EmployeeController extends Controller
 {
     public $crud;
 
     public function __construct()
     {
-        $this->crud = new SimpleCRUDHelper(new Customer);
+        $this->crud = new SimpleCRUDHelper(new Employee);
     }
 
     /**
@@ -24,10 +24,10 @@ class CustomerController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $resource = CustomerResource::collection(Customer::all());
-            return ResponseHelper::successResponse($resource, 'Customers consultados exitosamente.', 200);
+            $resource = EmployeeResource::collection(Employee::all());
+            return ResponseHelper::successResponse($resource, 'Employees consultados exitosamente.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar customers. '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al consultar employees. '.$e->getMessage(), 400);
         }
     }
 
@@ -42,7 +42,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
         return $this->crud->store($request);
     }
@@ -50,14 +50,14 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id)
     {
         try {
-            $customer = Customer::find($id);
-            $resource = new CustomerResource($customer);
-            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla customers.', 200);
+            $employee = Employee::find($id);
+            $resource = new EmployeeResource($employee);
+            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla employee.', 200);
         } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar registro en la tabla customers: '.$e->getMessage(), 400);
+            return ResponseHelper::errorResponse('Error al consultar registro en la tabla employee: '.$e->getMessage(), 400);
         }
     }
 
