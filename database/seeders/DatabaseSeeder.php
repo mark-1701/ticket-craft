@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             RoleSeeder::class,
+            PrioritySeeder::class,
         ]);
 
         User::factory()->count(30)->create();

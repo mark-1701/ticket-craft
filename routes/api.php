@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -26,3 +27,4 @@ Route::resource('/user', UserController::class);
 Route::resource('/role', RoleController::class);
 Route::resource('/customer', CustomerController::class);
 Route::resource('/employee', EmployeeController::class);
+Route::resource('/priority', PriorityController::class);

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken()->nullable();
             $table->string('profile_picture_uri')->nullable();
-            $table->boolean('state');
+            $table->boolean('state')->default(true);
             $table->timestamps();
             $table->foreign('role_id')->references('id')->on('roles');
         });

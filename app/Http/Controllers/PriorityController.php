@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ResponseHelper;
 use App\Helpers\SimpleCRUDHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\Priority;
 
-class RoleController extends Controller
+class PriorityController extends Controller
 {
     public $crud;
 
     public function __construct()
     {
-        $this->crud = new SimpleCRUDHelper(new Role);
+        $this->crud = new SimpleCRUDHelper(new Priority);
     }
     
     /**
@@ -38,7 +37,7 @@ class RoleController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-       return $this->crud->store($request);
+        return $this->crud->store($request);
     }
 
     /**
