@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('priorities', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('name')->unique();
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('priorities');
+        Schema::dropIfExists('types');
     }
 };
