@@ -23,12 +23,7 @@ class EmployeeController extends Controller
      */
     public function index(): JsonResponse
     {
-        try {
-            $resource = EmployeeResource::collection(Employee::all());
-            return ResponseHelper::successResponse($resource, 'Employees consultados exitosamente.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar employees. '.$e->getMessage(), 400);
-        }
+        return $this->crud->index(EmployeeResource::class);
     }
 
     /**
@@ -44,7 +39,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->crud->store($request);
+        return $this->crud->store($request, EmployeeResource::class);
     }
 
     /**
@@ -52,13 +47,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $employee = Employee::find($id);
-            $resource = new EmployeeResource($employee);
-            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla employee.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar registro en la tabla employee: '.$e->getMessage(), 400);
-        }
+        return $this->crud->show($id, EmployeeResource::class);
     }
 
     /**
@@ -74,7 +63,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $this->crud->update($request, $id);
+        return $this->crud->update($request, $id, EmployeeResource::class);
     }
 
     /**

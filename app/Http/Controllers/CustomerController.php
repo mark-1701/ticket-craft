@@ -22,13 +22,9 @@ class CustomerController extends Controller
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
-    {
-        try {
-            $resource = CustomerResource::collection(Customer::all());
-            return ResponseHelper::successResponse($resource, 'Customers consultados exitosamente.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar customers. '.$e->getMessage(), 400);
-        }
+    { 
+        
+        return $this->crud->index(CustomerResource::class);
     }
 
     /**
@@ -44,7 +40,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        return $this->crud->store($request);
+        return $this->crud->store($request, CustomerResource::class);
     }
 
     /**
@@ -52,13 +48,7 @@ class CustomerController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        try {
-            $customer = Customer::find($id);
-            $resource = new CustomerResource($customer);
-            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla customers.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar registro en la tabla customers: '.$e->getMessage(), 400);
-        }
+        return $this->crud->show($id, CustomerResource::class);
     }
 
     /**
@@ -74,7 +64,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $this->crud->update($request, $id);
+        return $this->crud->update($request, $id, CustomerResource::class);
     }
 
     /**
