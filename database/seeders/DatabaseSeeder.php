@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Departament;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             PrioritySeeder::class,
-            TypeSeeder::class
+            TypeSeeder::class,
+            DepartamentSeeder::class,
+            TicketStateSeeder::class
         ]);
 
         User::factory()->count(30)->create();

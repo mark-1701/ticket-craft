@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TicketStateController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -30,3 +32,5 @@ Route::resource('/customer', CustomerController::class);
 Route::resource('/employee', EmployeeController::class);
 Route::resource('/priority', PriorityController::class);
 Route::resource('/type', TypeController::class);
+Route::resource('/departament', DepartamentController::class);
+Route::resource('/ticket-state', TicketStateController::class);
