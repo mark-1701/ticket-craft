@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PrioritySeeder::class,
             TypeSeeder::class,
-            DepartamentSeeder::class,
+            DepartmentSeeder::class,
             TicketStateSeeder::class
         ]);
 

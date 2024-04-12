@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Departament;
+use App\Models\Department;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DepartamentSeeder extends Seeder
+class DepartmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,7 +28,7 @@ class DepartamentSeeder extends Seeder
         
         foreach ($departments as $key => $departament) {
             $id = strtoupper(($key + 1) . '_' . str_replace(' ', '_', $departament));
-            Departament::create([
+            Department::create([
                 'id' => $id,
                 'name' => $departament
             ]);

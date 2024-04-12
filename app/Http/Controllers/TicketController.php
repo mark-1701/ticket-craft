@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SimpleCRUDHelper;
-use App\Models\Departament;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\TicketResource;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
-class DepartamentController extends Controller
+class TicketController extends Controller
 {
     public $crud;
 
     public function __construct()
     {
-        $this->crud = new SimpleCRUDHelper(new Departament);
+        $this->crud = new SimpleCRUDHelper(new Ticket);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        return $this->crud->index();
+        return $this->crud->index(TicketResource::class);
     }
 
     /**
@@ -35,17 +35,17 @@ class DepartamentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        return $this->crud->store($request);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id)
     {
-        return $this->crud->show($id);
+        //
     }
 
     /**
@@ -59,16 +59,16 @@ class DepartamentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, string $id)
     {
-        return $this->crud->update($request, $id);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy(string $id)
     {
-        return $this->crud->destroy($id);
+        //
     }
 }

@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DepartamentController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketStateController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
@@ -32,5 +34,6 @@ Route::resource('/customer', CustomerController::class);
 Route::resource('/employee', EmployeeController::class);
 Route::resource('/priority', PriorityController::class);
 Route::resource('/type', TypeController::class);
-Route::resource('/departament', DepartamentController::class);
+Route::resource('/department', DepartmentController::class);
 Route::resource('/ticket-state', TicketStateController::class);
+Route::resource('/ticket', TicketController::class);

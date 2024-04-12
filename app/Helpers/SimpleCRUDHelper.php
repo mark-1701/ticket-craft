@@ -22,7 +22,7 @@ class SimpleCRUDHelper
         try {
             $data = $this->model::all();
             if ($resourceClass !== null) $data = $resourceClass::collection($data);
-            return ResponseHelper::successResponse($data, ucfirst($this->model->getTable()) . ' consultados exitosamente.', 201);
+            return ResponseHelper::successResponse($data, ucfirst($this->model->getTable()) . ' consultados exitosamente.', 200);
         } catch (\Exception $e) {
             return ResponseHelper::errorResponse('Error al consultar '. $this->model->getTable() . '. ' . $e->getMessage(), 400);
         }
