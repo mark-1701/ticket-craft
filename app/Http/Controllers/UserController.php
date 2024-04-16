@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FileHelper;
 use App\Helpers\ResponseHelper;
+use App\Helpers\SimpleCRUDHelper;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,17 +14,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller
 {
+    public $crud;
+
+    public function __construct()
+    {
+        $this->crud = new SimpleCRUDHelper(new User);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
     {
-        try {
-            $resource = UserResource::collection(User::all());
-            return ResponseHelper::successResponse($resource, 'users consultados exitosamente.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar users: ' . $e->getMessage(), 400);
-        }
+        return $this->crud->index(UserResource::class);
     }
 
     /**
@@ -39,21 +41,23 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        try {
-            $fileName = FileHelper::handleSingleFileUpload($request);
-            $user = new User();
-            $user->role_id = $request->role_id;
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = $request->password;
-            $user->profile_picture_uri = $fileName;
-            $user->save();
-            $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Registro creado exitosamente en la tabla users.', 201);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al crear registro en la tabla users: '.$e->getMessage(), 400);
-        }
+        return $this->crud->store($this->createFileRequest($request), UserResource::class);
+
+
+        // try {
+        //     $user = new User();
+        //     $user->role_id = $request->role_id;
+        //     $user->name = $request->name;
+        //     $user->username = $request->username;
+        //     $user->email = $request->email;
+        //     $user->password = $request->password;
+        //     $user->profile_picture_uri = $fileName;
+        //     $user->save();
+        //     $resource = new UserResource($user);
+        //     return ResponseHelper::successResponse($resource, 'Registro creado exitosamente en la tabla users.', 201);
+        // } catch (\Exception $e) {
+        //     return ResponseHelper::errorResponse('Error al crear registro en la tabla users: '.$e->getMessage(), 400);
+        // }       
     }
 
     /**
@@ -61,13 +65,7 @@ class UserController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        try {
-            $user = User::find($id);
-            $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Registro consultado exitosamente en la tabla users.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al consultar registro en la tabla users: '.$e->getMessage(), 400);
-        }
+        return $this->crud->show($id, UserResource::class);
     }
 
     /**
@@ -83,21 +81,23 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        try {
-            $fileName = FileHelper::handleSingleFileUpload($request);
-            $user = User::find($id);
-            $user->role_id = $request->role_id;
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = $request->password;
-            if ($fileName != null) $user->profile_picture_uri = $fileName;
-            $user->save();
-            $resource = new UserResource($user);
-            return ResponseHelper::successResponse($resource, 'Registro actualizado exitosamente en la tabla users.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al actualizar registro en la tabla users. '.$e->getMessage(), 400);
-        }
+        return $this->crud->update($this->createFileRequest($request), $id, UserResource::class);
+
+        // try {
+        //     $fileName = FileHelper::handleSingleFileUpload($request);
+        //     $user = User::find($id);
+        //     $user->role_id = $request->role_id;
+        //     $user->name = $request->name;
+        //     $user->username = $request->username;
+        //     $user->email = $request->email;
+        //     $user->password = $request->password;
+        //     if ($fileName != null) $user->profile_picture_uri = $fileName;
+        //     $user->save();
+        //     $resource = new UserResource($user);
+        //     return ResponseHelper::successResponse($resource, 'Registro actualizado exitosamente en la tabla users.', 200);
+        // } catch (\Exception $e) {
+        //     return ResponseHelper::errorResponse('Error al actualizar registro en la tabla users. '.$e->getMessage(), 400);
+        // }
     }
 
     /**
@@ -105,11 +105,18 @@ class UserController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        try {
-            User::find($id)->delete();
-            return ResponseHelper::successResponse(null, 'Registro eliminado exitosamente en la tabla users.', 200);
-        } catch (\Exception $e) {
-            return ResponseHelper::errorResponse('Error al eliminar registro en la tabla users: '.$e->getMessage(), 400);
+        return $this->crud->destroy($id);
+    }
+
+    public function createFileRequest($request): Request
+    {
+        $fileName = FileHelper::handleSingleFileUpload($request);
+        if ($fileName !== null)
+        {
+            $newRequestArray = $request->except(['file']);
+            $newRequestArray['profile_picture_uri'] = $fileName;
+            return new Request($newRequestArray);
         }
+        return $request;
     }
 }

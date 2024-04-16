@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\SimpleCRUDHelper;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -43,9 +44,9 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        return $this->crud->show($id, TicketResource::class);
     }
 
     /**
@@ -67,8 +68,8 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        return $this->crud->destroy($id);
     }
 }
