@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TicketState extends Model
 {
     use HasFactory;
-
     protected $table = 'ticket_states';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $guarded = [];
     protected $casts = [
         'id' => 'string',

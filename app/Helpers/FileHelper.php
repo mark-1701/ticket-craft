@@ -5,13 +5,15 @@ use Illuminate\Http\Request;
 
 class FileHelper
 {
-    public static function handleSingleFileUpload(Request $request)
+    public static function handleSingleFileUpload(Request $request, $attributeName = null): Request
     {
         if ($request->hasFile('file')) {
             $fileName = time() . '.' . $request->file->extension();
             $request->file->storeAs('public/images', $fileName);
-            return $fileName;
+            $newRequestArray = $request->except(['file']);
+            $newRequestArray[$attributeName] = $fileName;
+            return new Request($newRequestArray);
         }
-        return null;
+        return $request;
     }
 }

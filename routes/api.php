@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\DepartmentController;
@@ -37,3 +38,4 @@ Route::resource('/type', TypeController::class);
 Route::resource('/department', DepartmentController::class);
 Route::resource('/ticket-state', TicketStateController::class);
 Route::resource('/ticket', TicketController::class);
+Route::resource('/assignment', AssignmentController::class);

@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FileHelper;
 use App\Helpers\SimpleCRUDHelper;
-use App\Http\Resources\TicketResource;
-use App\Models\Ticket;
+use App\Http\Resources\AssignmentResource;
+use App\Models\Assignment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class AssignmentController extends Controller
 {
     public $crud;
-
     public function __construct()
     {
-        $this->crud = new SimpleCRUDHelper(new Ticket);
+        $this->crud = new SimpleCRUDHelper(new Assignment);
     }
-
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return $this->crud->index(TicketResource::class);
+        return $this->crud->index(AssignmentResource::class);
     }
 
     /**
@@ -37,9 +34,9 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        return $this->crud->store(FileHelper::handleSingleFileUpload($request, 'image_uri'), TicketResource::class);
+        return $this->crud->store($request, AssignmentResource::class);
     }
 
     /**
@@ -47,7 +44,7 @@ class TicketController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        return $this->crud->show($id, TicketResource::class);
+        return $this->crud->show($id, AssignmentResource::class);
     }
 
     /**
@@ -61,9 +58,9 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
-        return $this->crud->update(FileHelper::handleSingleFileUpload($request, 'image_uri'), $id, TicketResource::class);
+        return $this->crud->update($request, $id, AssignmentResource::class);
     }
 
     /**

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('ticket_state_id');
             $table->string('type_id');
             $table->string('department_id');
-            $table->string('subject');
-            $table->text('description');
+            $table->string('subject')->nullable();
+            $table->text('description')->nullable();
             $table->text('resolution')->nullable();
             $table->string('image_uri')->nullable();
             $table->timestamps();

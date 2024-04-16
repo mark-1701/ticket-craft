@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        return $this->crud->store($this->createFileRequest($request), UserResource::class);
+        return $this->crud->store(FileHelper::handleSingleFileUpload($request, 'profile_picture_uri'), UserResource::class);
 
 
         // try {
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        return $this->crud->update($this->createFileRequest($request), $id, UserResource::class);
+        return $this->crud->update(FileHelper::handleSingleFileUpload($request, 'profile_picture_uri'), $id, UserResource::class);
 
         // try {
         //     $fileName = FileHelper::handleSingleFileUpload($request);
@@ -106,17 +106,5 @@ class UserController extends Controller
     public function destroy(string $id): JsonResponse
     {
         return $this->crud->destroy($id);
-    }
-
-    public function createFileRequest($request): Request
-    {
-        $fileName = FileHelper::handleSingleFileUpload($request);
-        if ($fileName !== null)
-        {
-            $newRequestArray = $request->except(['file']);
-            $newRequestArray['profile_picture_uri'] = $fileName;
-            return new Request($newRequestArray);
-        }
-        return $request;
     }
 }

@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Priority extends Model
 {
     use HasFactory;
-
     protected $table = 'priorities';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $guarded = [];
     protected $casts = [
         'id' => 'string',
