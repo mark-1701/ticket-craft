@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Helpers\SimpleCRUDHelper;
+use App\Http\Requests\AssignmentRequest;
 use App\Http\Resources\AssignmentResource;
 use App\Models\Assignment;
 use Illuminate\Http\JsonResponse;
@@ -34,7 +36,7 @@ class AssignmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(AssignmentRequest $request): JsonResponse
     {
         return $this->crud->store($request, AssignmentResource::class);
     }
@@ -60,7 +62,8 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        return $this->crud->update($request, $id, AssignmentResource::class);
+        // return $this->crud->update($request, $id, AssignmentResource::class);
+        return ResponseHelper::errorResponse('No es posible actualizar', 403);
     }
 
     /**
@@ -68,6 +71,7 @@ class AssignmentController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        return $this->crud->destroy($id);
+        // return $this->crud->destroy($id);
+        return ResponseHelper::errorResponse('No es posible eliminar', 403);
     }
 }

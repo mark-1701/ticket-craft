@@ -32,7 +32,7 @@ class SimpleCRUDHelper
     {
         try {            
             $data = $this->model::create($request->all());
-            // $data = $this->model::find($request->id); // temporal
+            $data = $this->model::find($data->id); // temporal
             $data = $this->validateResourceApplicability($resourceClass, $data);
             return ResponseHelper::successResponse($data, 'Registro creado exitosamente en la tabla ' . $this->model->getTable() . '.', 200);
         } catch (\Exception $e) {
@@ -57,6 +57,7 @@ class SimpleCRUDHelper
 
             $data = $this->model::find($id);
             $data->update($request->all());
+            $data = $this->model::find($data->id); // temporal
             $data = $this->validateResourceApplicability($resourceClass, $data);
             return ResponseHelper::successResponse($data, 'Registro actualizado exitosamente en la tabla ' . $this->model->getTable() . '.', 200);
         } catch (\Exception $e) {
