@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EscalationController;
+use App\Http\Controllers\EscalationStateController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
@@ -39,3 +40,5 @@ Route::resource('/department', DepartmentController::class);
 Route::resource('/ticket-state', TicketStateController::class);
 Route::resource('/ticket', TicketController::class);
 Route::resource('/assignment', AssignmentController::class);
+Route::resource('/escalation-state', EscalationStateController::class);
+Route::resource('/escalation', EscalationController::class);

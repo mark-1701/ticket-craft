@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             PrioritySeeder::class,
             TypeSeeder::class,
             DepartmentSeeder::class,
-            TicketStateSeeder::class
+            TicketStateSeeder::class,
+            EscalationStateSeeder::class
         ]);
 
         User::factory()->count(30)->create();

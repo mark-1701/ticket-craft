@@ -19,4 +19,12 @@ class Employee extends Model
     {
         return $this->hasMany(Assignment::class);
     }
+    public function employees_original_escalations(): HasMany
+    {
+        return $this->hasMany(Escalation::class, 'id', 'original_employee_id');
+    }
+    public function employees_destination_escalations(): HasMany
+    {
+        return $this->hasMany(Escalation::class, 'id', 'destination_employee_id');
+    }
 }
