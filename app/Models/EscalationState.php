@@ -16,8 +16,9 @@ class EscalationState extends Model
     protected $casts = [
         'id' => 'string',
     ];
-    public function escalations(): HasMany
-    {
-        return $this->hasMany(Escalation::class);
-    }
+    
+    // public function escalations(): HasMany
+    // {
+    //     return $this->hasMany(Escalation::class);
+    // }
 }

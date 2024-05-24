@@ -17,10 +17,10 @@ class AssignmentResource extends JsonResource
         return [
             'id' => $this->id,
             'ticket_id' => $this->ticket_id,
-            'employee_id' => $this->employee_id,
+            'user_id' => $this->user_id,
             'state' => $this->state,
             'ticket' => $this->ticket,
-            'employee' => $this->employee
+            'user' => $this->user
         ];
     }
 }

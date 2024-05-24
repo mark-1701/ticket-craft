@@ -11,9 +11,9 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function customer(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
     public function priority(): BelongsTo
     {
@@ -34,5 +34,9 @@ class Ticket extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class);
+    }
+    public function escalations(): HasMany
+    {
+        return $this->hasMany(Escalation::class);
     }
 }

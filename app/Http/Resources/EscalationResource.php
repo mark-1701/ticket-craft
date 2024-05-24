@@ -17,17 +17,18 @@ class EscalationResource extends JsonResource
         return [
             'id' => $this->id,
             'ticket_id' => $this->ticket_id,
-            'original_employee_id' => $this->original_employee_id,
-            'destination_employee_id' => $this->original_employee_id,
+            'original_user_id' => $this->original_user_id,
+            'destination_user_id' => $this->destination_user_id,
             'escalation_state_id' => $this->escalation_state_id,
             'original_assignment_id' => $this->original_assignment_id,
             'destination_assignment_id' => $this->destination_assignment_id,
             'reason' => $this->reason,
-            'original_employee' => $this->original_employee,
-            'destination_employee' => $this->destination_employee,
-            'escalation_state' => $this->escalation_state,
-            'original_assignment' => $this->original_assignment,
-            'destination_assignment' => $this->destination_assignment,
+            'ticket' => $this->ticket,
+            // 'original_user' => $this->original_user,
+            // 'destination_user' => $this->destination_user,
+            // 'escalation_state' => $this->escalation_state,
+            // 'original_assignment' => $this->original_assignment,
+            // 'destination_assignment' => $this->destination_assignment,
         ];
     }
 }

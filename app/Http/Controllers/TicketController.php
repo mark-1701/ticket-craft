@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FileHelper;
+use App\Helpers\ResponseHelper;
 use App\Helpers\SimpleCRUDHelper;
 use App\Http\Resources\TicketResource;
+use App\Models\Assignment;
+use App\Models\Escalation;
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -72,5 +76,42 @@ class TicketController extends Controller
     public function destroy(string $id): JsonResponse
     {
         return $this->crud->destroy($id);
+    }
+
+    public function getTicketsByUserId(string $id): JsonResponse
+    {
+        $data = Ticket::where('user_id', $id)->get();
+        return ResponseHelper::successResponse(TicketResource::collection(($data)), 'Tickets consultados correctamente', 200);
+    }
+
+    public function getAvailableTickets(): JsonResponse
+    {
+        $ticketIds = Ticket::leftJoin('assignments', 'tickets.id', '=', 'assignments.ticket_id')
+                 ->leftJoin('escalations', 'tickets.id', '=', 'escalations.ticket_id')
+                 ->whereNull('assignments.ticket_id')
+                 ->whereNull('escalations.ticket_id')
+                 ->select('tickets.id') // Ajusta los campos que deseas seleccionar
+                 ->get();
+
+        $data = Ticket::whereIn('id', $ticketIds)->get();
+        return ResponseHelper::successResponse(TicketResource::collection(($data)), 'Tickets consultados correctamente', 200);
+    }
+
+    public function getUnescalatedAssignedTickets($id): JsonResponse
+    {
+        $ticketIds = Assignment::where('user_id', $id)
+        ->whereNotIn('ticket_id', function($query) {
+            $query->select('ticket_id')->from('escalations');
+        })->select('ticket_id')
+        ->get();
+        $data = Ticket::whereIn('id', $ticketIds)->get();
+        return ResponseHelper::successResponse(TicketResource::collection(($data)), 'Tickets consultados correctamente', 200);
+    }
+
+    public function getEscaledTickets(): JsonResponse
+    {
+        $ticketIds = Escalation::select('ticket_id')->get();
+        $data = Ticket::whereIn('id', $ticketIds)->get();
+        return ResponseHelper::successResponse(TicketResource::collection($data), 'Tickets consultados correctamente', 200);
     }
 }

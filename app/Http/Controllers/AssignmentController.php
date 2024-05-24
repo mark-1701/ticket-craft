@@ -6,7 +6,9 @@ use App\Helpers\ResponseHelper;
 use App\Helpers\SimpleCRUDHelper;
 use App\Http\Requests\AssignmentRequest;
 use App\Http\Resources\AssignmentResource;
+use App\Http\Resources\TicketResource;
 use App\Models\Assignment;
+use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -73,5 +75,12 @@ class AssignmentController extends Controller
     {
         // return $this->crud->destroy($id);
         return ResponseHelper::errorResponse('No es posible eliminar', 403);
+    }
+
+    public function getAssigmentsByUserId(string $id): JsonResponse
+    {
+        $ticketIds = Assignment::where('user_id', $id)->select('ticket_id')->get();
+        $data = Ticket::whereIn('id', $ticketIds)->get();
+        return ResponseHelper::successResponse(TicketResource::collection($data), 'Tickets consultados correctamente', 200);
     }
 }

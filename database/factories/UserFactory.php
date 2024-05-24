@@ -12,15 +12,8 @@ class UserFactory extends Factory
     {
         $roles = [
             '1_ADMIN',
-            '10_TESTER',
-            '2_MANAGER',
-            '3_EMPLOYEE',
-            '4_SUPERVISOR',
-            '5_COORDINATOR',
-            '6_TEAM_LEAD',
-            '7_DEVELOPER',
-            '8_DESIGNER',
-            '9_ANALYST'
+            '2_CUSTOMER',
+            '3_TECHNICIAN',
         ];
 
 

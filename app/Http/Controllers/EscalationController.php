@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SimpleCRUDHelper;
+use App\Http\Requests\EscalationRequest;
 use App\Http\Resources\EscalationResource;
 use App\Models\Escalation;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class EscalationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(EscalationRequest $request): JsonResponse
     {
         return $this->crud->store($request, EscalationResource::class);
     }

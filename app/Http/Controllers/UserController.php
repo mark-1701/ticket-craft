@@ -107,4 +107,15 @@ class UserController extends Controller
     {
         return $this->crud->destroy($id);
     }
+
+    // public function getNotCustomersOrEmployees(): JsonResponse
+    // {
+    //     $users = User::leftJoin('customers', 'users.id', '=', 'customers.user_id')
+    //         ->leftJoin('employees', 'users.id', '=', 'employees.user_id')
+    //         ->whereNull('customers.user_id')
+    //         ->whereNull('employees.user_id')
+    //         ->select('users.id', 'users.name')
+    //         ->get();
+    //     return ResponseHelper::successResponse($users, 'hello world', 200);
+    // }
 }

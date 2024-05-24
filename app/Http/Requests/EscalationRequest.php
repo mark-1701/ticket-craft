@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Assignment;
+use App\Models\Escalation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AssignmentRequest extends FormRequest
+class EscalationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class AssignmentRequest extends FormRequest
     {
         return [
             'ticket_id' => 'required',
-            'user_id' => [
+            'original_user_id' => [
             'required',
                 function ($attribute, $value, $fail) {
-                    $exists = Assignment::where('ticket_id', $this->ticket_id)
-                                         ->where('user_id', $value)
+                    $exists = Escalation::where('ticket_id', $this->ticket_id)
+                                         ->where('original_user_id', $value)
                                          ->exists();
                     if ($exists) {
                         $fail("La combinación de $attribute y ticket_id ya existe.");

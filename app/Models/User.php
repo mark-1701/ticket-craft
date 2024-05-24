@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,14 +21,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class); 
     }
-
-    public function customer(): HasOne
+    public function tickets(): HasMany
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasMany(Ticket::class);
     }
-
-    public function employee(): HasOne
+    public function assignments(): HasMany
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasMany(Assignment::class);
     }
+    
+    // public function employees_original_escalations(): HasMany
+    // {
+    //     return $this->hasMany(Escalation::class, 'id', 'original_employee_id');
+    // }
+    // public function employees_destination_escalations(): HasMany
+    // {
+    //     return $this->hasMany(Escalation::class, 'id', 'destination_employee_id');
+    // }
 }

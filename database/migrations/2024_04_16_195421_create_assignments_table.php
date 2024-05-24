@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('state')->default(true);
             $table->timestamps();
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

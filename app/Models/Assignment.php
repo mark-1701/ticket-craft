@@ -15,16 +15,16 @@ class Assignment extends Model
     {
         return $this->belongsTo(Ticket::class);
     }
-    public function employee(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
-    public function assignments_original_escalations(): HasMany
-    {
-        return $this->hasMany(Escalation::class, 'id', 'original_assignment_id');
-    }
-    public function assignments_destination_escalations(): HasMany
-    {
-        return $this->hasMany(Escalation::class, 'id', 'destination_assignment_id');
-    }
+    // public function assignments_original_escalations(): HasMany
+    // {
+    //     return $this->hasMany(Escalation::class, 'id', 'original_assignment_id');
+    // }
+    // public function assignments_destination_escalations(): HasMany
+    // {
+    //     return $this->hasMany(Escalation::class, 'id', 'destination_assignment_id');
+    // }
 }
