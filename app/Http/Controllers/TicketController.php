@@ -87,11 +87,11 @@ class TicketController extends Controller
     public function getAvailableTickets(): JsonResponse
     {
         $ticketIds = Ticket::leftJoin('assignments', 'tickets.id', '=', 'assignments.ticket_id')
-                 ->leftJoin('escalations', 'tickets.id', '=', 'escalations.ticket_id')
-                 ->whereNull('assignments.ticket_id')
-                 ->whereNull('escalations.ticket_id')
-                 ->select('tickets.id') // Ajusta los campos que deseas seleccionar
-                 ->get();
+            ->leftJoin('escalations', 'tickets.id', '=', 'escalations.ticket_id')
+            ->whereNull('assignments.ticket_id')
+            ->whereNull('escalations.ticket_id')
+            ->select('tickets.id') // Ajusta los campos que deseas seleccionar
+            ->get();
 
         $data = Ticket::whereIn('id', $ticketIds)->get();
         return ResponseHelper::successResponse(TicketResource::collection(($data)), 'Tickets consultados correctamente', 200);
@@ -100,10 +100,10 @@ class TicketController extends Controller
     public function getUnescalatedAssignedTickets($id): JsonResponse
     {
         $ticketIds = Assignment::where('user_id', $id)
-        ->whereNotIn('ticket_id', function($query) {
-            $query->select('ticket_id')->from('escalations');
-        })->select('ticket_id')
-        ->get();
+            ->whereNotIn('ticket_id', function ($query) {
+                $query->select('ticket_id')->from('escalations');
+            })->select('ticket_id')
+            ->get();
         $data = Ticket::whereIn('id', $ticketIds)->get();
         return ResponseHelper::successResponse(TicketResource::collection(($data)), 'Tickets consultados correctamente', 200);
     }
@@ -114,4 +114,28 @@ class TicketController extends Controller
         $data = Ticket::whereIn('id', $ticketIds)->get();
         return ResponseHelper::successResponse(TicketResource::collection($data), 'Tickets consultados correctamente', 200);
     }
+
+    public function getGeneralTicketStatistics(): JsonResponse
+    {
+        $ticketsByState = Ticket::select('ticket_states.name', \DB::raw('COUNT(tickets.id) as ticket_count'))
+            ->join('ticket_states', 'tickets.ticket_state_id', '=', 'ticket_states.id')
+            ->groupBy('ticket_states.name')
+            ->orderBy('ticket_count', 'DESC')
+            ->get();
+
+        return ResponseHelper::successResponse($ticketsByState, 'Tickets consultados correctamente', 200);
+    }
+
+    public function getGeneralTicketStatisticsForUser(int $userId): JsonResponse
+    {
+        $ticketsByState = Ticket::select('ticket_states.name', \DB::raw('COUNT(tickets.id) as ticket_count'))
+            ->join('ticket_states', 'tickets.ticket_state_id', '=', 'ticket_states.id')
+            ->where('tickets.user_id', '=', $userId) // Agregar condición para el ID del usuario
+            ->groupBy('ticket_states.name')
+            ->orderBy('ticket_count', 'DESC')
+            ->get();
+
+        return ResponseHelper::successResponse($ticketsByState, 'Tickets del usuario consultados correctamente', 200);
+    }
+
 }

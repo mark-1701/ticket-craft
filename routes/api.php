@@ -34,18 +34,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // obtener tickets de un usuario especifico
 Route::get('/ticket/tickets-by-userid/{user}', [TicketController::class, 'getTicketsByUserId'])->name('ticket.getTicketsByUserId');
+
 // obtener los tickets que no estan asginados ni escalados
 Route::get('/ticket/available-tickets', [TicketController::class, 'getAvailableTickets'])->name('ticket.getAvailableTickets');
 
 // obtener todos los tickets asignados de un tecnico especifico
 // Route::get('/assignment/assigments-by-userid/{user}', [AssignmentController::class, 'getAssigmentsByUserId'])->name('assigment.getAssigmentsByUserId');
 
-
 // obtener tickets asignados que no estan escalados
 Route::get('/ticket/unescalated-assigned-tickets/{user}', [TicketController::class, 'getUnescalatedAssignedTickets'])->name('ticket.getUnescalatedAssignedTickets');
 
 // obtener tickets escalados de un usuario especifico
 Route::get('/ticket/escaled-tickets', [TicketController::class, 'getEscaledTickets'])->name('ticket.getEscaledTickets');
+
+// obtener estadisticas de cantidad de ticktes por estado de forma general
+Route::get('/ticket/general-ticket-statistics', [TicketController::class, 'getGeneralTicketStatistics'])->name('ticket.getGeneralTicketStatistics');
+
+// obtener estadisticas de cantidad de ticktes por estado de forma general de un usuario especifico
+Route::get('/ticket/general-ticket-statistics-for-user/{user}', [TicketController::class, 'getGeneralTicketStatisticsForUser'])->name('ticket.getGeneralTicketStatisticsForUser');
 
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
